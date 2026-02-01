@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://csdoyld3oeg4n"]
+
+[ext_resource type="Texture2D" uid="uid://ctwbi25f73j22" path="res://assets/fish.png" id="1_3vyb7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3vyb7"]
+radius = 7.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g2els"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3vyb7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=2004395378]
+
+[node name="Collision Shape" type="CollisionShape2D" parent="." unique_id=2085585010]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_3vyb7")
+
+[node name="Animated Sprite" type="AnimatedSprite2D" parent="." unique_id=138215344]
+sprite_frames = SubResource("SpriteFrames_g2els")
