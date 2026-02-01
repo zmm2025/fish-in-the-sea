@@ -3,6 +3,15 @@
 [ext_resource type="PackedScene" uid="uid://csdoyld3oeg4n" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://c0xr7tmpqxvo0" path="res://assets/terrain/dirt-tileset.png" id="2_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://eurytgrytqua" path="res://assets/terrain/sand-tileset.png" id="3_lbhrr"]
+[ext_resource type="Shader" uid="uid://cqr6sk3nwn65v" path="res://shaders/sea_background.gdshader" id="4_seabg"]
+[ext_resource type="Script" uid="uid://bc4i21rt1edq1" path="res://scripts/sea_background_rect.gd" id="5_searect"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_seabg"]
+shader = ExtResource("4_seabg")
+shader_parameter/scale = 0.01510000070997
+shader_parameter/rect_size = Vector2(270, 197)
+shader_parameter/gradient_strength = 0.50000002375
+shader_parameter/depth_tint = Color(0.1, 0.25, 0.5, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 resource_name = "Dirt"
@@ -55,28 +64,23 @@ sources/1 = SubResource("TileSetAtlasSource_p57ef")
 
 [node name="Game" type="Node2D" unique_id=108318808]
 
-[node name="SeaBackground" type="CanvasLayer" parent="." unique_id=552912495]
-layer = -1
+[node name="SeaBackground" type="Node2D" parent="." unique_id=552912495]
 
-[node name="ColorRect" type="ColorRect" parent="SeaBackground" unique_id=190471743]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ColorRect" type="ColorRect" parent="SeaBackground" unique_id=226020931]
+material = SubResource("ShaderMaterial_seabg")
+offset_left = -807.0
+offset_top = -271.0
+offset_right = 782.0
+offset_bottom = 349.0
 color = Color(0.22, 0.45, 0.78, 1)
+script = ExtResource("5_searect")
+
+[node name="Tilemap" type="TileMapLayer" parent="." unique_id=1803311518]
+tile_map_data = PackedByteArray("AAD+/wMAAQABAAAAAAD//wMAAQABAAAAAAAAAAMAAQABAAAAAAABAAMAAQABAAAAAAACAAMAAQABAAAAAAADAAMAAQABAAAAAAAEAAMAAQABAAAAAAAFAAMAAQABAAAAAAAGAAMAAQABAAAAAAAHAAMAAQABAAAAAAD9/wMAAQABAAAAAAD8/wMAAQABAAAAAAD7/wMAAQABAAAAAAD6/wMAAQABAAAAAAD5/wMAAQABAAAAAAD4/wMAAQABAAAAAAD3/wMAAQAAAAAAAAD3/wQAAQAAAAEAAAAIAAMAAQACAAAAAAAIAAQAAQACAAEAAAAHAAQAAQABAAEAAAAGAAQAAQABAAEAAAAFAAQAAQABAAEAAAAEAAQAAQABAAEAAAADAAQAAQABAAEAAAACAAQAAQABAAEAAAABAAQAAQABAAEAAAAAAAQAAQABAAEAAAD//wQAAQABAAEAAAD+/wQAAQABAAEAAAD9/wQAAQABAAEAAAD8/wQAAQABAAEAAAD7/wQAAQABAAEAAAD6/wQAAQABAAEAAAD5/wQAAQABAAEAAAD4/wQAAQABAAEAAAA=")
+tile_set = SubResource("TileSet_u5sy4")
 
 [node name="Player" parent="." unique_id=2004395378 instance=ExtResource("1_uwrxv")]
 
 [node name="Camera" type="Camera2D" parent="Player" unique_id=592717699]
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
-
-[node name="Tilemap" type="TileMapLayer" parent="." unique_id=1803311518]
-tile_map_data = PackedByteArray("AAD+/wMAAQABAAAAAAD//wMAAQABAAAAAAAAAAMAAQABAAAAAAABAAMAAQABAAAAAAACAAMAAQABAAAAAAADAAMAAQABAAAAAAAEAAMAAQABAAAAAAAFAAMAAQABAAAAAAAGAAMAAQABAAAAAAAHAAMAAQABAAAAAAD9/wMAAQABAAAAAAD8/wMAAQABAAAAAAD7/wMAAQABAAAAAAD6/wMAAQABAAAAAAD5/wMAAQABAAAAAAD4/wMAAQABAAAAAAD3/wMAAQAAAAAAAAD3/wQAAQAAAAEAAAAIAAMAAQACAAAAAAAIAAQAAQACAAEAAAAHAAQAAQABAAEAAAAGAAQAAQABAAEAAAAFAAQAAQABAAEAAAAEAAQAAQABAAEAAAADAAQAAQABAAEAAAACAAQAAQABAAEAAAABAAQAAQABAAEAAAAAAAQAAQABAAEAAAD//wQAAQABAAEAAAD+/wQAAQABAAEAAAD9/wQAAQABAAEAAAD8/wQAAQABAAEAAAD7/wQAAQABAAEAAAD6/wQAAQABAAEAAAD5/wQAAQABAAEAAAD4/wQAAQABAAEAAAA=")
-tile_set = SubResource("TileSet_u5sy4")

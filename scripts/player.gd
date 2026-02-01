@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 
 const SPEED = 140.0
-const DECELERATION = 500.0  # Units per second when slowing to a stop
+# Rate (units per second) at which velocity moves toward target; water resistance.
+const WATER_DRAG = 600.0
 
 
 func _physics_process(delta: float) -> void:
@@ -14,10 +15,12 @@ func _physics_process(delta: float) -> void:
 
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
-		velocity.x = direction.x * SPEED
-		velocity.y = direction.y * SPEED
+		var target_x := direction.x * SPEED
+		var target_y := direction.y * SPEED
+		velocity.x = move_toward(velocity.x, target_x, WATER_DRAG * delta)
+		velocity.y = move_toward(velocity.y, target_y, WATER_DRAG * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
-		velocity.y = move_toward(velocity.y, 0, DECELERATION * delta)
+		velocity.x = move_toward(velocity.x, 0, WATER_DRAG * delta)
+		velocity.y = move_toward(velocity.y, 0, WATER_DRAG * delta)
 
 	move_and_slide()
