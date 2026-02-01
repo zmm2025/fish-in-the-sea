@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Fish Out of Water"
-run/main_scene="uid://roet77vkfdtu"
+run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
 [autoload]
 
-SceneManager="*uid://j20v4cg7v8m1"
+SceneManager="*res://addons/scene_manager/SceneManager.tscn"
 
 [editor_plugins]
 
