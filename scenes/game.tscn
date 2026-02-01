@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://eurytgrytqua" path="res://assets/terrain/sand-tileset.png" id="3_lbhrr"]
 [ext_resource type="Shader" uid="uid://cqr6sk3nwn65v" path="res://shaders/sea_background.gdshader" id="4_seabg"]
 [ext_resource type="Script" uid="uid://bc4i21rt1edq1" path="res://scripts/sea_background_rect.gd" id="5_searect"]
+[ext_resource type="PackedScene" uid="uid://y62ohhstmarh" path="res://scenes/enemy.tscn" id="6_enemy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_seabg"]
 shader = ExtResource("4_seabg")
@@ -84,3 +85,7 @@ tile_set = SubResource("TileSet_u5sy4")
 [node name="Camera" type="Camera2D" parent="Player" unique_id=592717699]
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
+
+[node name="Enemy" parent="." unique_id=814357175 instance=ExtResource("6_enemy")]
+position = Vector2(104, 41)
+detection_radius = 40.0
