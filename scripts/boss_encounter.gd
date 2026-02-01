@@ -4,6 +4,8 @@ extends Node
 ## unless overridden in Inspector. Call start_encounter(player, enemy) to run the sequence.
 
 const DEFAULT_CONFIG_PATH := "res://resources/boss_encounter_config.tres"
+const COMFORT_ZONE_SCENE_PATH := "res://scenes/comfort_zone.tscn"
+const BOSS_PROJECTILE_SCENE_PATH := "res://scenes/boss_projectile.tscn"
 
 ## Override in Inspector to use a different config. If null, loads from DEFAULT_CONFIG_PATH.
 @export var config: Resource
@@ -14,6 +16,7 @@ var _player: CharacterBody2D
 ## True while the boss camera is active and dual-subject tracking is running.
 var is_encounter_active: bool = false
 var _enemy: Node2D
+var _projectile_timer: Timer = null
 
 
 func _ready() -> void:
@@ -75,7 +78,71 @@ func _reveal_boss() -> void:
 	if boss_cam:
 		boss_cam.enabled = true
 
+	_spawn_comfort_zone()
 	is_encounter_active = true
+	_start_boss_shooting()
+
+
+func _start_boss_shooting() -> void:
+	if not _config or _config.projectile_shoot_interval <= 0.0:
+		return
+	if _projectile_timer:
+		_projectile_timer.queue_free()
+	_projectile_timer = Timer.new()
+	_projectile_timer.wait_time = _config.projectile_shoot_interval
+	_projectile_timer.one_shot = false
+	_projectile_timer.timeout.connect(_spawn_boss_projectile)
+	add_child(_projectile_timer)
+	_projectile_timer.start()
+
+
+func _spawn_boss_projectile() -> void:
+	if not _enemy or not is_encounter_active or not _config:
+		return
+	var packed := load(BOSS_PROJECTILE_SCENE_PATH) as PackedScene
+	if not packed:
+		return
+	var projectile: Area2D = packed.instantiate()
+	if not projectile is Area2D:
+		projectile.queue_free()
+		return
+	var texture := load(_config.projectile_sprite_path) as Texture2D
+	if texture:
+		var sprite := projectile.get_node_or_null("Sprite2D") as Sprite2D
+		if sprite:
+			sprite.texture = texture
+			sprite.hframes = maxi(1, _config.projectile_sprite_hframes)
+			sprite.vframes = maxi(1, _config.projectile_sprite_vframes)
+			var total_frames: int = sprite.hframes * sprite.vframes
+			sprite.frame = randi() % total_frames
+	# 10° below right to 10° below left (downward cone; Godot: 0°=right, 90°=down)
+	var angle_deg: float = randf_range(10.0, 170.0)
+	projectile.direction = Vector2.RIGHT.rotated(deg_to_rad(angle_deg))
+	projectile.speed = _config.projectile_speed
+	projectile.exclude_boss = _enemy
+	projectile.global_position = _enemy.global_position
+	projectile.z_index = _enemy.z_index - 1
+	var parent := get_parent() as Node2D
+	if parent:
+		parent.add_child(projectile)
+	else:
+		projectile.queue_free()
+
+
+func _spawn_comfort_zone() -> void:
+	if not _config or not _config.has_method("get_comfort_zone_position"):
+		return
+	var packed := load(COMFORT_ZONE_SCENE_PATH) as PackedScene
+	if not packed:
+		push_error("BossEncounter: Could not load ComfortZone scene: %s" % COMFORT_ZONE_SCENE_PATH)
+		return
+	var comfort_zone: Node2D = packed.instantiate()
+	var parent := get_parent() as Node2D
+	if not parent:
+		comfort_zone.queue_free()
+		return
+	parent.add_child(comfort_zone)
+	comfort_zone.global_position = _config.get_comfort_zone_position()
 
 
 func _process(_delta: float) -> void:

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://drynydtq24bj1"]
+
+[ext_resource type="Script" uid="uid://cfjovty10ctgc" path="res://scripts/comfort_zone.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://snlj4rylrepl" path="res://assets/shell.png" id="2_shell"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bubble"]
+radius = 37.215588
+
+[node name="ComfortZone" type="Node2D" unique_id=1024723501]
+script = ExtResource("1_script")
+
+[node name="BubbleArea" type="Area2D" parent="." unique_id=1483984131]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BubbleArea" unique_id=2032679305]
+shape = SubResource("CircleShape2D_bubble")
+
+[node name="ShellSprite" type="Sprite2D" parent="." unique_id=1769219019]
+texture = ExtResource("2_shell")

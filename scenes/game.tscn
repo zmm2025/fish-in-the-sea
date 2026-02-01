@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://y62ohhstmarh" path="res://scenes/enemy.tscn" id="6_enemy"]
 [ext_resource type="Script" uid="uid://c5urex7wsmvfj" path="res://scripts/game.gd" id="7_game"]
 [ext_resource type="PackedScene" uid="uid://bukjq2qyhmbb7" path="res://scenes/boss_encounter.tscn" id="8_boss"]
+[ext_resource type="Texture2D" path="res://assets/title.png" id="9_title"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_seabg"]
 shader = ExtResource("4_seabg")
@@ -70,6 +71,7 @@ script = ExtResource("7_game")
 camera_min_bottom_height = 80.0
 
 [node name="SeaBackground" type="Node2D" parent="." unique_id=552912495]
+z_index = -10
 
 [node name="ColorRect" type="ColorRect" parent="SeaBackground" unique_id=226020931]
 material = SubResource("ShaderMaterial_seabg")
@@ -95,3 +97,26 @@ position = Vector2(104, 41)
 detection_radius = 15.0
 
 [node name="BossEncounter" parent="." unique_id=1809790683 instance=ExtResource("8_boss")]
+
+[node name="TitleScreen" type="CanvasLayer" parent="." unique_id=1909800744]
+layer = 50
+
+[node name="ColorRect" type="ColorRect" parent="TitleScreen" unique_id=1910810845]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.1, 0.25, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="TitleScreen" unique_id=1911820946]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="TitleScreen/CenterContainer" unique_id=1912831047]
+texture = ExtResource("9_title")
+expand_mode = 3
+stretch_mode = 5

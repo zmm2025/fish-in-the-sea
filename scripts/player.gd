@@ -28,3 +28,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = move_toward(velocity.y, 0, WATER_DRAG * delta)
 
 	move_and_slide()
+
+	# Face the direction of horizontal movement (flip sprite when moving left).
+	if velocity.x != 0:
+		$"Animated Sprite".flip_h = velocity.x < 0

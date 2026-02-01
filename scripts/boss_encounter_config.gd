@@ -25,6 +25,16 @@ extends Resource
 ## World Y value that the bottom of the boss camera view must never go below (floor limit).
 @export var camera_floor_limit: float = 80.0
 
+## Path to the projectile sprite (e.g. Z spritesheet). Used when boss shoots.
+@export var projectile_sprite_path: String = "res://assets/decorations/z.png"
+## Horizontal and vertical frame count of the projectile spritesheet. Use 1,1 for a single image.
+@export var projectile_sprite_hframes: int = 1
+@export var projectile_sprite_vframes: int = 1
+## Speed (pixels per second) of boss projectiles.
+@export var projectile_speed: float = 120.0
+## Seconds between each projectile spawn.
+@export var projectile_shoot_interval: float = 0.25
+
 
 func get_boss_position() -> Vector2:
 	return Vector2(boss_position_x, boss_position_y)

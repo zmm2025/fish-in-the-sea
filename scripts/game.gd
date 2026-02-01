@@ -6,14 +6,35 @@ extends Node2D
 ## Configure in the Inspector on the Game node.
 @export var camera_min_bottom_height: float = 0.0
 
+var _title_screen: CanvasLayer
+
 
 func _ready() -> void:
+	_title_screen = get_node_or_null("TitleScreen") as CanvasLayer
+	_update_title_size()
 	var player := get_node_or_null("Player") as CharacterBody2D
 	var enemy := get_node_or_null("Enemy")
 	if not player or not enemy or not enemy.has_signal("player_entered_range"):
 		return
 
 	enemy.player_entered_range.connect(_on_enemy_player_entered_range.bind(player, enemy))
+
+
+func _update_title_size() -> void:
+	var title_rect := _title_screen.get_node_or_null("CenterContainer/TextureRect") as TextureRect if _title_screen else null
+	if not title_rect or not title_rect.texture:
+		return
+	var vp_size := get_viewport().get_visible_rect().size
+	var tex_size := title_rect.texture.get_size()
+	var target_width := vp_size.x * 0.5
+	var target_height := target_width * (tex_size.y / tex_size.x) if tex_size.x > 0 else target_width
+	title_rect.custom_minimum_size = Vector2(target_width, target_height)
+
+
+func _input(event: InputEvent) -> void:
+	if _title_screen and _title_screen.visible and event is InputEventKey and event.pressed:
+		_title_screen.visible = false
+		get_viewport().set_input_as_handled()
 
 
 func _process(_delta: float) -> void:

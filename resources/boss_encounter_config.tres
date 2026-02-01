@@ -1,16 +1,8 @@
-[gd_resource type="Resource" format=3 uid="uid://b4oss3nc0unt3r"]
+[gd_resource type="Resource" script_class="BossEncounterConfig" format=3 uid="uid://buavnqmytftyj"]
 
-[ext_resource type="Script" path="res://scripts/boss_encounter_config.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://c538x3sr31tsp" path="res://scripts/boss_encounter_config.gd" id="1_3oxju"]
 
 [resource]
-script = ExtResource("1_script")
-pre_black_duration = 2.0
-black_duration = 1.0
-black_color = Color(0, 0, 0, 1)
-boss_position_x = 104.0
-boss_position_y = -40.0
-camera_padding = 24.0
-camera_initial_zoom = 4.0
-boss_protection_margin = 0
-boss_sprite_path = "res://assets/characters/boss-sea-urchin/boss-sea-urchin.png"
-camera_floor_limit = 80.0
+script = ExtResource("1_3oxju")
+boss_position_y = -150.0
+projectile_sprite_hframes = 3
