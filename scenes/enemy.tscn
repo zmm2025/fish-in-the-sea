@@ -1,18 +1,31 @@
 [gd_scene format=3 uid="uid://y62ohhstmarh"]
 
 [ext_resource type="Texture2D" uid="uid://2v3xjncsn1cc" path="res://assets/characters/baby-sea-urchin.png" id="1_texture"]
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://ciulvs0mgen61" path="res://scripts/enemy.gd" id="2_script"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detect"]
 radius = 80.0
 
-[node name="Enemy" type="Area2D"]
+[node name="Enemy" type="Area2D" unique_id=821367960]
 collision_layer = 0
-collision_mask = 1
 script = ExtResource("2_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=217285694]
 texture = ExtResource("1_texture")
 
-[node name="DetectionShape" type="CollisionShape2D" parent="."]
+[node name="DetectionShape" type="CollisionShape2D" parent="." unique_id=1461833410]
 shape = SubResource("CircleShape2D_detect")
+
+[node name="DialogueLabel" type="Label" parent="." unique_id=870114623]
+visible = false
+offset_left = -40.0
+offset_top = -28.0
+offset_right = 40.0
+offset_bottom = -8.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.5)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "...huh?"
+horizontal_alignment = 1
+vertical_alignment = 1

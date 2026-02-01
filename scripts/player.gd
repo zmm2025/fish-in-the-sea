@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+## When true, input is ignored and the player decelerates to a stop. Set by encounter logic.
+var movement_locked: bool = false
 
 const SPEED = 140.0
 # Rate (units per second) at which velocity moves toward target; water resistance.
@@ -7,11 +9,13 @@ const WATER_DRAG = 600.0
 
 
 func _physics_process(delta: float) -> void:
-	# 4-directional input (WASD / arrow keys via ui_* actions)
-	var direction := Vector2(
-		Input.get_axis("ui_left", "ui_right"),
-		Input.get_axis("ui_up", "ui_down")
-	)
+	var direction := Vector2.ZERO
+	if not movement_locked:
+		# 4-directional input (WASD / arrow keys via ui_* actions)
+		direction = Vector2(
+			Input.get_axis("ui_left", "ui_right"),
+			Input.get_axis("ui_up", "ui_down")
+		)
 
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
