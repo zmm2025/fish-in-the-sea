@@ -15,6 +15,14 @@ run/main_scene="uid://roet77vkfdtu"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://assets/icon.svg"
 
+[autoload]
+
+SceneManager="*uid://j20v4cg7v8m1"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/scene_manager/plugin.cfg")
+
 [input]
 
 ui_left={
@@ -59,6 +67,11 @@ ui_down={
 common/physics_ticks_per_second=120
 3d/physics_engine="Jolt Physics"
 common/physics_interpolation=true
+
+[plugins]
+
+SceneManager="res://addons/scene_manager/plugin.cfg"
+PhantomCamera="res://addons/phantom_camera/plugin.cfg"
 
 [rendering]
 
