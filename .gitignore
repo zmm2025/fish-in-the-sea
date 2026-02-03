@@ -18,3 +18,14 @@ mono_crash.*.json
 
 # Editor-specific (machine-local paths)
 .vscode/
+
+# Build artifacts (most should not be committed, but EXE is needed for Game Jam)
+*.pck
+*.wasm
+*.js
+*.html
+*.manifest.json
+*.service.worker.js
+*.worklet.js
+*.offline.html
+*.console.exe
